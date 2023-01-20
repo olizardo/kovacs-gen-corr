@@ -1,18 +1,18 @@
 gen.sim.corr <- function(x, sigma = 0.001) {
      library(expm)
-     r <- nrow(x)
-     c <- ncol(x)
-     r.c <- diag(r)
-     c.c <- diag(c)
-     r.m <- rowMeans(x)
-     c.m <- colMeans(x)
-     d.r.c <- 1
-     d.c.c <- 1
-     k <- 1
-     while (d.r.c > sigma | d.c.c > sigma) {
+     r <- nrow(x) #Number of rows in the input matrix
+     c <- ncol(x) #Number of columns in the input matrix
+     r.c <- diag(r) #Identity matrix of dimensions r X r
+     c.c <- diag(c) #Identity matrix of dimensions c X c
+     r.m <- rowMeans(x) #row means
+     c.m <- colMeans(x) #column means
+     d.r.c <- 1 #initializing difference values
+     d.c.c <- 1 #initializing difference values
+     k <- 1 #initializing iteration counter
+     while (d.r.c > sigma | d.c.c > sigma) { #iterate until difference is less than sigma
           p.r.c <- r.c
           p.c.c <- c.c
-          for (i in 1: r) {
+          for (i in 1: r) { #compute pairwise generalized similarities for rows
                for (j in 1:r) {
                     if (i != j) {
                          r.x <- x[i, ] - r.m[i]
@@ -27,7 +27,7 @@ gen.sim.corr <- function(x, sigma = 0.001) {
                }
           }
           for (i in 1: c) {
-               for (j in 1:c) {
+               for (j in 1:c) { #compute pairwise generalized similarities for columns
                     if (i != j) {
                          c.x <- x[, i] - c.m[i]
                          c.y <- x[, j] - c.m[j]
@@ -48,5 +48,5 @@ gen.sim.corr <- function(x, sigma = 0.001) {
      colnames(r.c) <- rownames(x)
      rownames(c.c) <- colnames(x)
      colnames(c.c) <- colnames(x)
-     return(list(row.sims = r.c, col.sims = c.c, n.iter = k))
+     return(list(row.sims = r.c, col.sims = c.c, n.iter = k)) #return rowwise and columnwise generalization similarities
 }
