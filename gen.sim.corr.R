@@ -1,5 +1,5 @@
 gen.sim.corr <- function(x, sigma = 0.001) {
-     library(expm)
+     library(expm) #package required for matrix multiplication in R
      r <- nrow(x) #Number of rows in the input matrix
      c <- ncol(x) #Number of columns in the input matrix
      r.c <- diag(r) #Identity matrix of dimensions r X r
